@@ -44,8 +44,10 @@ public class AppointmentService {
     }
 
     public AppointmentDTO bookAppointment(AppointmentDTO dto) {
-        Patient patient = patientRepository.findById(dto.getPatientId()).orElseThrow();
-        Doctor doctor = doctorRepository.findById(dto.getDoctorId()).orElseThrow();
+        Patient patient = patientRepository.findById(dto.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient not found with id: " + dto.getPatientId()));
+        Doctor doctor = doctorRepository.findById(dto.getDoctorId())
+                .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + dto.getDoctorId()));
 
         if (appointmentRepository.isDoctorBooked(doctor, dto.getAppointmentDate(), dto.getTimeSlot())) {
             throw new RuntimeException("Conflict: Doctor is already booked for this time slot!");
@@ -66,13 +68,15 @@ public class AppointmentService {
     }
 
     public AppointmentDTO updateStatus(Long appointmentId, AppointmentStatus status) {
-        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow();
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + appointmentId));
         appointment.setStatus(status);
         return convertToDTO(appointmentRepository.save(appointment));
     }
 
     public AppointmentDTO updateNotes(Long appointmentId, String notes) {
-        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow();
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + appointmentId));
         appointment.setNotes(notes);
         return convertToDTO(appointmentRepository.save(appointment));
     }

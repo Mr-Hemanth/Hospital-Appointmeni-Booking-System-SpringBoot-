@@ -20,11 +20,7 @@ public class AppointmentController {
     @PostMapping("/book")
     @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<?> bookAppointment(@RequestBody AppointmentDTO appointmentDTO) {
-        try {
-            return ResponseEntity.ok(appointmentService.bookAppointment(appointmentDTO));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        return ResponseEntity.ok(appointmentService.bookAppointment(appointmentDTO));
     }
 
     @GetMapping("/{patientId}")

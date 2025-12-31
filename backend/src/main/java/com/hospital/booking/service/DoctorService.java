@@ -85,7 +85,8 @@ public class DoctorService {
 
     @Transactional
     public DoctorDTO updateDoctor(Long id, DoctorDTO doctorDTO) {
-        Doctor doctor = doctorRepository.findById(id).orElseThrow();
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
         doctor.setSpecialization(doctorDTO.getSpecialization());
         doctor.setExperience(doctorDTO.getExperience());
         doctor.setAvailability(doctorDTO.getAvailability());

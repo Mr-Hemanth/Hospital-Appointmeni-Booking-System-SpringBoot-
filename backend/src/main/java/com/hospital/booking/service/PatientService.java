@@ -40,7 +40,8 @@ public class PatientService {
 
     @Transactional
     public PatientDTO updatePatient(Long id, PatientDTO patientDTO) {
-        Patient patient = patientRepository.findById(id).orElseThrow();
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
         patient.setAge(patientDTO.getAge());
         patient.setGender(patientDTO.getGender());
         
