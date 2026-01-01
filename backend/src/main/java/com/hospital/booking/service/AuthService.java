@@ -51,14 +51,12 @@ public class AuthService {
         
         Long profileId = null;
         if (user.getRole() == Role.PATIENT) {
-            profileId = patientRepository.findByUser(user).get().getPatientId();
+            profileId = patientRepository.findByUser(user).map(Patient::getPatientId).orElse(null);
         } else if (user.getRole() == Role.DOCTOR) {
-            profileId = doctorRepository.findAll().stream()
-                    .filter(d -> d.getUser().getUserId().equals(user.getUserId()))
-                    .findFirst().get().getDoctorId();
+            profileId = doctorRepository.findByUser_UserId(user.getUserId()).map(Doctor::getDoctorId).orElse(null);
         }
 
-        return new JwtResponse(jwt, user.getEmail(), user.getRole().name(), profileId != null ? profileId : user.getUserId(), user.getName());
+        return new JwtResponse(jwt, user.getEmail(), user.getRole().name(), user.getUserId(), profileId, user.getName());
     }
 
     @Transactional

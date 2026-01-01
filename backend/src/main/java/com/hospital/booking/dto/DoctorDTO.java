@@ -7,6 +7,7 @@ public class DoctorDTO {
     private String specialization;
     private Integer experience;
     private String availability;
+    private String password;
 
     public DoctorDTO() {}
 
@@ -22,4 +23,6 @@ public class DoctorDTO {
     public void setExperience(Integer experience) { this.experience = experience; }
     public String getAvailability() { return availability; }
     public void setAvailability(String availability) { this.availability = availability; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }

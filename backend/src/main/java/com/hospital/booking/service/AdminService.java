@@ -35,8 +35,10 @@ public class AdminService {
         long totalAppointments = appointmentRepository.count();
         long pendingAppointments = appointmentRepository.countByStatus(AppointmentStatus.PENDING);
         long approvedAppointments = appointmentRepository.countByStatus(AppointmentStatus.APPROVED);
+        long completedAppointments = appointmentRepository.countByStatus(AppointmentStatus.COMPLETED);
+        long cancelledAppointments = appointmentRepository.countByStatus(AppointmentStatus.CANCELLED);
 
-        return new AdminStatsDTO(totalDoctors, totalPatients, totalAppointments, pendingAppointments, approvedAppointments);
+        return new AdminStatsDTO(totalDoctors, totalPatients, totalAppointments, pendingAppointments, approvedAppointments, completedAppointments, cancelledAppointments);
     }
 
     public List<PatientDTO> getAllPatients() {

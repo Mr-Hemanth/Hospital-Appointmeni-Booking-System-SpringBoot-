@@ -47,6 +47,12 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.updateStatus(appointmentId, status));
     }
 
+    @PutMapping("/{id}/cancel")
+    @PreAuthorize("hasRole('PATIENT') or hasRole('ADMIN')")
+    public ResponseEntity<?> cancelAppointment(@PathVariable Long id) {
+        return ResponseEntity.ok(appointmentService.updateStatus(id, AppointmentStatus.CANCELLED));
+    }
+
     @PutMapping("/notes")
     @PreAuthorize("hasRole('DOCTOR')")
     public ResponseEntity<?> updateNotes(@RequestParam Long appointmentId, @RequestBody String notes) {

@@ -70,7 +70,7 @@ public class DoctorService {
         User user = new User();
         user.setName(doctorDTO.getName());
         user.setEmail(doctorDTO.getEmail());
-        user.setPassword(encoder.encode("password123")); // Default password for new doctors
+        user.setPassword(encoder.encode(doctorDTO.getPassword() != null ? doctorDTO.getPassword() : "password123"));
         user.setRole(Role.DOCTOR);
         user = userRepository.save(user);
 
